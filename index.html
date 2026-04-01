@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Bar — Bring It Back</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0b0805;
+    --dark: #181008;
+    --surface: #221508;
+    --surface2: #2e1c0a;
+    --amber: #c8860a;
+    --amber-light: #e8a020;
+    --amber-pale: #f5d68a;
+    --cream: #f0e0c0;
+    --cream-dim: #b89a72;
+    --text: #ede0c8;
+    --text-muted: #9a7d5a;
+    --border: rgba(200, 134, 10, 0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  * { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(80px, 18vw, 180px);
+    font-weight: 700;
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.35s forwards;
+  }
+
+  .hero-title span {
+    display: block;
+    color: var(--amber);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 7vw, 72px);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    margin-top: 12px;
+  }
+
+  .hero-rule {
+    width: 80px;
+    height: 1px;
+    background: var(--amber);
+    margin: 36px auto;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--cream-dim);
+    max-width: 520px;
+    font-style: italic;
+    line-height: 1.65;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.65s forwards;
+  }
+
+  .hero-location {
+    margin-top: 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 52px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.95s forwards;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--amber);
+    color: var(--black);
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 40px;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--cream-dim);
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 32px;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* ── PHOTO PLACEHOLDER ── */
+  .photo-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .photo-cell {
+    aspect-ratio: 4/3;
+    background: var(--surface2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .photo-cell svg { opacity: 0.25; }
+
+  .photo-cell p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 90px 24px;
+  }
+
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--amber-pale);
+  }
+
+  p { color: var(--cream-dim); margin-bottom: 18px; }
+  p:last-child { margin-bottom: 0; }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── GOAL PROGRESS ── */
+  .goal-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 40px;
+    margin-top: 48px;
+  }
+
+  .goal-numbers {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .goal-raised {
+    font-family: 'Oswald', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .goal-target {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--amber);
+    width: 0%;
+    transition: width 1.2s ease;
+  }
+
+  .goal-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .goal-stat { }
+  .goal-stat-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cream);
+  }
+  .goal-stat-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── TIERS ── */
+  .tiers { max-width: 900px; margin: 0 auto; padding: 0 24px 90px; }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+    background: var(--border);
+  }
+
+  .tier-card {
+    background: var(--dark);
+    padding: 32px 28px;
+    text-decoration: none;
+    display: block;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .tier-card:hover { background: var(--surface); }
+
+  .tier-amount {
+    font-family: 'Oswald', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .tier-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+
+  .tier-perks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tier-perks li {
+    font-size: 14px;
+    color: var(--cream-dim);
+    padding: 6px 0;
+    border-top: 1px solid rgba(200,134,10,0.1);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .tier-perks li::before {
+    content: '—';
+    color: var(--amber);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .tier-card.featured {
+    background: var(--surface);
+    outline: 1px solid var(--amber);
+    outline-offset: -1px;
+  }
+  .tier-card.featured:hover { background: var(--surface2); }
+
+  .tier-badge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    background: var(--amber);
+    color: var(--black);
+    padding: 3px 10px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-top: 48px;
+  }
+
+  .step-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--surface2);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .step-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+
+  .step-text { font-size: 15px; color: var(--cream-dim); margin: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 52px 24px;
+  }
+
+  .footer-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .footer-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .footer-contact {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 48px;
+  }
+
+  .footer-contact a { color: var(--amber); text-decoration: none; }
+  .footer-contact a:hover { color: var(--amber-light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .photo-strip { grid-template-columns: 1fr; }
+    .photo-strip .photo-cell:not(:first-child) { display: none; }
+    .goal-block { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-eyebrow">Penfield, Illinois &nbsp;·&nbsp; Champaign County</p>
+  <h1 class="hero-title">
+    Our Bar
+    <span>Bring it back.</span>
+  </h1>
+  <div class="hero-rule"></div>
+  <p class="hero-sub">A legendary Champaign County roadhouse has been dark for two years. We bought the building. Now we need your help to bring it home.</p>
+  <p class="hero-location">Est. on the site of the oldest liquor license in Champaign County</p>
+  <div class="hero-cta">
+    <a href="#tiers" class="btn-primary">Back This Project</a>
+    <a href="#story" class="btn-secondary">Our Story</a>
+  </div>
+</header>
+
+<!-- PHOTO STRIP (placeholder) -->
+<div class="photo-strip">
+  <div class="photo-cell">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8860a" stroke-width="1">
+      <rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+    </svg>
+    <p>The Building</p>
+  </div>
+  <div class="photo-cell">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8860a" stroke-width="1">
+      <rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+    </svg>
+    <p>The Bar</p>
+  </div>
+  <div class="photo-cell">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8860a" stroke-width="1">
+      <rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+    </svg>
+    <p>The Stage</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- STORY -->
+<section id="story">
+  <p class="section-label reveal">The Story</p>
+  <h2 class="reveal">This place belonged to all of us. <em>It still does.</em></h2>
+  <p class="reveal">For generations, Our Bar was the kind of place Champaign County didn't know it needed until it was gone. A three-sided bar. Packed parking for bikes. A side stage that saw more good nights than anyone can count. Food that gave you a reason to make the drive out to the middle of nowhere — and portions that made sure you stayed a while.</p>
+  <p class="reveal">It sat on the oldest liquor license in the county. That history doesn't just go away because the lights went out.</p>
+  <p class="reveal">Two years ago, the doors closed. We weren't going to let it stay that way.</p>
+  <p class="reveal">We formed an LLC, bought the building, and we're putting together a package to hand a new operator the keys to something worth running. That means renovations. That means restoring what made this place special. That means we need your help.</p>
+
+  <div class="goal-block reveal">
+    <div class="goal-numbers">
+      <div class="goal-raised">$0</div>
+      <div class="goal-target">Goal: $25,000</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="goal-meta">
+      <div class="goal-stat">
+        <div class="goal-stat-num">0</div>
+        <div class="goal-stat-label">Backers</div>
+      </div>
+      <div class="goal-stat">
+        <div class="goal-stat-num">$0</div>
+        <div class="goal-stat-label">Raised</div>
+      </div>
+      <div class="goal-stat">
+        <div class="goal-stat-num">$25,000</div>
+        <div class="goal-stat-label">To Go</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TIERS -->
+<div class="tiers" id="tiers">
+  <p class="section-label reveal">How to Back It</p>
+  <h2 class="reveal">Pick your level. <em>Get your name on the wall.</em></h2>
+  <p class="reveal" style="max-width:580px;">Every contribution goes directly toward renovations. In return, you'll have a stake in this place from day one — and perks waiting for you when the doors open again.</p>
+
+  <div class="tiers-grid">
+    <!-- $25 -->
+    <a href="#stripe-link-25" class="tier-card reveal">
+      <div class="tier-amount">$25</div>
+      <div class="tier-name">Friend of the Bar</div>
+      <ul class="tier-perks">
+        <li>Your name on the Founders Wall inside the bar</li>
+      </ul>
+    </a>
+
+    <!-- $50 -->
+    <a href="#stripe-link-50" class="tier-card reveal">
+      <div class="tier-amount">$50</div>
+      <div class="tier-name">Founding Regular</div>
+      <ul class="tier-perks">
+        <li>Your name on the Founders Wall</li>
+        <li>Free drink on opening night</li>
+      </ul>
+    </a>
+
+    <!-- $100 -->
+    <a href="#stripe-link-100" class="tier-card featured reveal">
+      <div class="tier-badge">Most Popular</div>
+      <div class="tier-amount">$100</div>
+      <div class="tier-name">Roadhouse Backer</div>
+      <ul class="tier-perks">
+        <li>Your name on the Founders Wall</li>
+        <li>Free drink on opening night</li>
+        <li>$25 tab credit when the bar opens</li>
+      </ul>
+    </a>
+
+    <!-- $250 -->
+    <a href="#stripe-link-250" class="tier-card reveal">
+      <div class="tier-amount">$250</div>
+      <div class="tier-name">Roadhouse Patron</div>
+      <ul class="tier-perks">
+        <li>Your name on the Founders Wall</li>
+        <li>Free drink on opening night</li>
+        <li>$25 tab credit</li>
+        <li>Reserved table at the grand opening</li>
+      </ul>
+    </a>
+
+    <!-- $500 -->
+    <a href="#stripe-link-500" class="tier-card reveal">
+      <div class="tier-amount">$500+</div>
+      <div class="tier-name">Legend</div>
+      <ul class="tier-perks">
+        <li>Prominent name placement on the Founders Wall</li>
+        <li>Free drink on opening night</li>
+        <li>$75 tab credit</li>
+        <li>Reserved table at the grand opening</li>
+        <li>Permanent VIP status</li>
+      </ul>
+    </a>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- HOW IT WORKS -->
+<section>
+  <p class="section-label reveal">How It Works</p>
+  <h2 class="reveal">Simple. <em>Transparent.</em></h2>
+  <div class="steps">
+    <div class="reveal">
+      <div class="step-num">01</div>
+      <div class="step-title">Pick a tier</div>
+      <p class="step-text">Choose the level that feels right. All contributions go directly toward building renovations and getting Our Bar ready to reopen.</p>
+    </div>
+    <div class="reveal">
+      <div class="step-num">02</div>
+      <div class="step-title">Pay securely</div>
+      <p class="step-text">Contributions are processed through Stripe — the same payment platform used by millions of businesses worldwide. Your info is always safe.</p>
+    </div>
+    <div class="reveal">
+      <div class="step-num">03</div>
+      <div class="step-title">Claim your perks</div>
+      <p class="step-text">When the doors open, your perks will be waiting. Your name goes on the wall. Your tab credit is ready. You helped make this happen.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FOOTER CTA -->
+<footer>
+  <div class="footer-title">Our Bar</div>
+  <div class="footer-sub">Penfield, Illinois</div>
+  <a href="#tiers" class="btn-primary">Back This Project</a>
+  <p class="footer-contact">
+    Questions? Reach us at <a href="mailto:hello@ourbar.com">hello@ourbar.com</a>
+  </p>
+  <p class="footer-contact" style="margin-top: 8px; font-size: 12px;">
+    Our Bar is a privately held LLC. Contributions are not tax-deductible. All perks are redeemable upon the bar's opening under new operator.
+  </p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  const progressEl = document.getElementById('progressFill');
+  const raised = 0;
+  const goal = 25000;
+  setTimeout(() => { progressEl.style.width = Math.min((raised / goal) * 100, 100) + '%'; }, 500);
+</script>
+
+</body>
+</html>
