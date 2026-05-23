@@ -36,7 +36,6 @@
     overflow-x: hidden;
   }
 
-  /* ── NOISE OVERLAY ── */
   body::before {
     content: '';
     position: fixed;
@@ -49,7 +48,6 @@
 
   * { position: relative; z-index: 1; }
 
-  /* ── HERO ── */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -169,7 +167,6 @@
   }
   .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
 
-  /* ── PHOTO PLACEHOLDER ── */
   .photo-strip {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -198,7 +195,6 @@
     color: var(--text-muted);
   }
 
-  /* ── SECTIONS ── */
   section {
     max-width: 900px;
     margin: 0 auto;
@@ -223,21 +219,13 @@
     margin-bottom: 28px;
   }
 
-  h2 em {
-    font-style: italic;
-    color: var(--amber-pale);
-  }
+  h2 em { font-style: italic; color: var(--amber-pale); }
 
   p { color: var(--cream-dim); margin-bottom: 18px; }
   p:last-child { margin-bottom: 0; }
 
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 0;
-  }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
-  /* ── GOAL PROGRESS ── */
   .goal-block {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -286,13 +274,8 @@
     transition: width 1.2s ease;
   }
 
-  .goal-meta {
-    display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
+  .goal-meta { display: flex; gap: 32px; flex-wrap: wrap; }
 
-  .goal-stat { }
   .goal-stat-num {
     font-family: 'Oswald', sans-serif;
     font-size: 22px;
@@ -307,7 +290,6 @@
     color: var(--text-muted);
   }
 
-  /* ── TIERS ── */
   .tiers { max-width: 900px; margin: 0 auto; padding: 0 24px 90px; }
 
   .tiers-grid {
@@ -348,11 +330,7 @@
     margin-bottom: 20px;
   }
 
-  .tier-perks {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+  .tier-perks { list-style: none; margin: 0; padding: 0; }
 
   .tier-perks li {
     font-size: 14px;
@@ -392,7 +370,95 @@
     margin-bottom: 16px;
   }
 
-  /* ── HOW IT WORKS ── */
+  /* ── GOAT TIER ── */
+  .tier-card.goat {
+    grid-column: 1 / -1;
+    background: #150d04;
+    background: linear-gradient(#150d04, #150d04) padding-box,
+                linear-gradient(135deg, #7a5c10, #ffd700, #c8960a, #ffe066, #b8860b, #ffd700, #7a5c10) border-box;
+    border: 2px solid transparent;
+    padding: 40px 40px 36px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 48px;
+    align-items: start;
+  }
+  .tier-card.goat:hover {
+    background: linear-gradient(#1e1105, #1e1105) padding-box,
+                linear-gradient(135deg, #7a5c10, #ffd700, #c8960a, #ffe066, #b8860b, #ffd700, #7a5c10) border-box;
+  }
+
+  .goat-left { grid-column: 1; }
+  .goat-right { grid-column: 2; }
+
+  .goat-crown {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block;
+    filter: sepia(1) saturate(3) hue-rotate(5deg);
+  }
+
+  .tier-card.goat .tier-amount {
+    font-size: 56px;
+    background: linear-gradient(135deg, #c8960a, #ffd700, #e8b020);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .tier-card.goat .tier-name {
+    font-size: 16px;
+    letter-spacing: 0.3em;
+    background: linear-gradient(90deg, #c8960a, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0;
+  }
+
+  .goat-badge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #c8960a, #ffd700, #c8960a);
+    color: #0b0805;
+    padding: 4px 12px;
+    display: inline-block;
+    margin-bottom: 18px;
+    font-weight: 700;
+  }
+
+  .tier-card.goat .tier-perks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+  }
+
+  .tier-card.goat .tier-perks li {
+    border-top-color: rgba(255, 215, 0, 0.15);
+    color: #d4b87a;
+  }
+
+  .tier-card.goat .tier-perks li::before { color: #ffd700; }
+
+  .goat-desc {
+    font-style: italic;
+    font-size: 15px;
+    color: #9a7d4a;
+    margin: 0 0 20px;
+    line-height: 1.5;
+    max-width: 380px;
+  }
+
+  @media (max-width: 680px) {
+    .tier-card.goat { grid-template-columns: 1fr; gap: 24px 0; padding: 28px 20px; }
+    .goat-left, .goat-right { grid-column: 1; }
+    .tier-card.goat .tier-perks { grid-template-columns: 1fr; }
+  }
+
   .steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -421,7 +487,6 @@
 
   .step-text { font-size: 15px; color: var(--cream-dim); margin: 0; }
 
-  /* ── FOOTER ── */
   footer {
     border-top: 1px solid var(--border);
     text-align: center;
@@ -438,22 +503,12 @@
     margin-bottom: 6px;
   }
 
-  .footer-sub {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 32px;
-  }
+  .footer-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
 
-  .footer-contact {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-top: 48px;
-  }
-
+  .footer-contact { font-size: 14px; color: var(--text-muted); margin-top: 48px; }
   .footer-contact a { color: var(--amber); text-decoration: none; }
   .footer-contact a:hover { color: var(--amber-light); }
 
-  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
@@ -466,7 +521,6 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
     .photo-strip { grid-template-columns: 1fr; }
     .photo-strip .photo-cell:not(:first-child) { display: none; }
@@ -476,7 +530,6 @@
 </head>
 <body>
 
-<!-- HERO -->
 <header class="hero">
   <p class="hero-eyebrow">Penfield, Illinois &nbsp;·&nbsp; Champaign County</p>
   <h1 class="hero-title">
@@ -492,7 +545,6 @@
   </div>
 </header>
 
-<!-- PHOTO STRIP (placeholder) -->
 <div class="photo-strip">
   <div class="photo-cell">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8860a" stroke-width="1">
@@ -516,7 +568,6 @@
 
 <hr class="divider">
 
-<!-- STORY -->
 <section id="story">
   <p class="section-label reveal">The Story</p>
   <h2 class="reveal">This place belonged to all of us. <em>It still does.</em></h2>
@@ -550,14 +601,12 @@
 
 <hr class="divider">
 
-<!-- TIERS -->
 <div class="tiers" id="tiers">
   <p class="section-label reveal">How to Back It</p>
   <h2 class="reveal">Pick your level. <em>Get your name on the wall.</em></h2>
   <p class="reveal" style="max-width:580px;">Every contribution goes directly toward renovations. In return, you'll have a stake in this place from day one — and perks waiting for you when the doors open again.</p>
 
   <div class="tiers-grid">
-    <!-- $25 -->
     <a href="https://buy.stripe.com/28E14mgOvbxc6K22sP87K00" class="tier-card reveal">
       <div class="tier-amount">$25</div>
       <div class="tier-name">Friend of the Bar</div>
@@ -566,7 +615,6 @@
       </ul>
     </a>
 
-    <!-- $50 -->
     <a href="https://buy.stripe.com/eVq8wO9m358Ob0igjF87K01" class="tier-card reveal">
       <div class="tier-amount">$50</div>
       <div class="tier-name">Founding Regular</div>
@@ -576,7 +624,6 @@
       </ul>
     </a>
 
-    <!-- $100 -->
     <a href="https://buy.stripe.com/5kQ14m69RbxcgkC0kH87K02" class="tier-card featured reveal">
       <div class="tier-badge">Most Popular</div>
       <div class="tier-amount">$100</div>
@@ -588,7 +635,6 @@
       </ul>
     </a>
 
-    <!-- $250 -->
     <a href="https://buy.stripe.com/eVqaEW55N44Kd8qebx87K03" class="tier-card reveal">
       <div class="tier-amount">$250</div>
       <div class="tier-name">Roadhouse Patron</div>
@@ -600,7 +646,6 @@
       </ul>
     </a>
 
-    <!-- $500 -->
     <a href="https://buy.stripe.com/9B63cu0PxgRw0lE5F187K04" class="tier-card reveal">
       <div class="tier-amount">$500+</div>
       <div class="tier-name">Legend</div>
@@ -612,12 +657,32 @@
         <li>Permanent VIP status</li>
       </ul>
     </a>
+
+    <!-- $1000+ GOAT -->
+    <a href="#stripe-link-goat" class="tier-card goat reveal">
+      <div class="goat-left">
+        <span class="goat-crown">&#9819;</span>
+        <div class="goat-badge">The Highest Honor</div>
+        <div class="tier-amount">$1,000+</div>
+        <div class="tier-name">The GOAT</div>
+      </div>
+      <div class="goat-right">
+        <p class="goat-desc">You didn't just back this place — you built it. Your name goes at the top of the wall, where it belongs.</p>
+        <ul class="tier-perks">
+          <li>Top billing on the Founders Wall</li>
+          <li>Free drink on opening night</li>
+          <li>$150 tab credit</li>
+          <li>Permanent reserved spot</li>
+          <li>VIP status for life</li>
+          <li>Seat at the table on opening night</li>
+        </ul>
+      </div>
+    </a>
   </div>
 </div>
 
 <hr class="divider">
 
-<!-- HOW IT WORKS -->
 <section>
   <p class="section-label reveal">How It Works</p>
   <h2 class="reveal">Simple. <em>Transparent.</em></h2>
@@ -642,7 +707,6 @@
 
 <hr class="divider">
 
-<!-- FOOTER CTA -->
 <footer>
   <div class="footer-title">Our Bar</div>
   <div class="footer-sub">Penfield, Illinois</div>
