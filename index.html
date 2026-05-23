@@ -294,10 +294,19 @@
 
   .tiers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2px;
     margin-top: 48px;
     background: var(--border);
+  }
+
+  .tiers-grid > a:last-of-type {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 700px) {
+    .tiers-grid { grid-template-columns: 1fr; }
+    .tiers-grid > a:last-of-type { grid-column: span 1; }
   }
 
   .tier-card {
@@ -373,23 +382,16 @@
   /* ── GOAT TIER ── */
   .tier-card.goat {
     grid-column: 1 / -1;
-    background: #150d04;
     background: linear-gradient(#150d04, #150d04) padding-box,
                 linear-gradient(135deg, #7a5c10, #ffd700, #c8960a, #ffe066, #b8860b, #ffd700, #7a5c10) border-box;
     border: 2px solid transparent;
     padding: 40px 40px 36px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0 48px;
-    align-items: start;
+    display: block;
   }
   .tier-card.goat:hover {
     background: linear-gradient(#1e1105, #1e1105) padding-box,
                 linear-gradient(135deg, #7a5c10, #ffd700, #c8960a, #ffe066, #b8860b, #ffd700, #7a5c10) border-box;
   }
-
-  .goat-left { grid-column: 1; }
-  .goat-right { grid-column: 2; }
 
   .goat-crown {
     font-size: 28px;
@@ -400,10 +402,7 @@
 
   .tier-card.goat .tier-amount {
     font-size: 56px;
-    background: linear-gradient(135deg, #c8960a, #ffd700, #e8b020);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #ffd700;
     line-height: 1;
     margin-bottom: 4px;
   }
@@ -411,11 +410,8 @@
   .tier-card.goat .tier-name {
     font-size: 16px;
     letter-spacing: 0.3em;
-    background: linear-gradient(90deg, #c8960a, #ffd700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0;
+    color: #c8960a;
+    margin-bottom: 16px;
   }
 
   .goat-badge {
@@ -431,10 +427,19 @@
     font-weight: 700;
   }
 
+  .goat-desc {
+    font-style: italic;
+    font-size: 15px;
+    color: #9a7d4a;
+    margin: 0 0 24px;
+    line-height: 1.5;
+    max-width: 520px;
+  }
+
   .tier-card.goat .tier-perks {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 24px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0 40px;
   }
 
   .tier-card.goat .tier-perks li {
@@ -444,20 +449,14 @@
 
   .tier-card.goat .tier-perks li::before { color: #ffd700; }
 
-  .goat-desc {
+  .goat-more {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #7a6040;
     font-style: italic;
-    font-size: 15px;
-    color: #9a7d4a;
-    margin: 0 0 20px;
-    line-height: 1.5;
-    max-width: 380px;
   }
-
-  @media (max-width: 680px) {
-    .tier-card.goat { grid-template-columns: 1fr; gap: 24px 0; padding: 28px 20px; }
-    .goat-left, .goat-right { grid-column: 1; }
-    .tier-card.goat .tier-perks { grid-template-columns: 1fr; }
-  }
+  .goat-more a { color: #c8960a; text-decoration: none; }
+  .goat-more a:hover { color: #ffd700; }
 
   .steps {
     display: grid;
@@ -659,26 +658,25 @@
     </a>
 
     <!-- $1000+ GOAT -->
-    <a href="https://buy.stripe.com/14A14m0Pxbxc8Sac3p87K05" class="tier-card goat reveal">
-      <div class="goat-left">
-        <span class="goat-crown">&#9819;</span>
-        <div class="goat-badge">The Highest Honor</div>
-        <div class="tier-amount">$1,000+</div>
-        <div class="tier-name">The GOAT</div>
+    <div class="tier-card goat reveal">
+      <span class="goat-crown">&#9819;</span>
+      <div class="goat-badge">The Highest Honor</div>
+      <div class="tier-amount">$1,000+</div>
+      <div class="tier-name">The GOAT</div>
+      <p class="goat-desc">You didn't just back this place — you built it. Your name goes at the top of the wall, where it belongs.</p>
+      <ul class="tier-perks">
+        <li>Top billing on the Founders Wall</li>
+        <li>Free drink on opening night</li>
+        <li>$150 tab credit</li>
+        <li>Permanent reserved spot</li>
+        <li>VIP status for life</li>
+        <li>Seat at the table on opening night</li>
+      </ul>
+      <div style="margin-top: 28px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+        <a href="#stripe-link-goat" class="btn-primary" style="padding: 14px 32px; background: linear-gradient(90deg, #c8960a, #ffd700, #c8960a); color: #0b0805;">Back at $1,000</a>
+        <p class="goat-more" style="margin: 0;">Want to give more? <a href="mailto:hello@ourbar.com">hello@ourbar.com</a></p>
       </div>
-      <div class="goat-right">
-        <p class="goat-desc">You didn't just back this place — you built it. Your name goes at the top of the wall, where it belongs.</p>
-        <ul class="tier-perks">
-          <li>Top billing on the Founders Wall</li>
-          <li>Free drink on opening night</li>
-          <li>$150 tab credit</li>
-          <li>Permanent reserved spot</li>
-          <li>VIP status for life</li>
-          <li>Seat at the table on opening night</li>
-          <li>Want to give more? Email us at <a href="mailto:hello@ourbarpenfield.com">hello@ourbarpenfield.com</a>.</li>
-        </ul>
-      </div>
-    </a>
+    </div>
   </div>
 </div>
 
@@ -713,7 +711,7 @@
   <div class="footer-sub">Penfield, Illinois</div>
   <a href="#tiers" class="btn-primary">Back This Project</a>
   <p class="footer-contact">
-    Questions? Reach us at <a href="mailto:hello@ourbarpenfield.com">hello@ourbarpenfield.com</a>
+    Questions? Reach us at <a href="mailto:hello@ourbar.com">hello@ourbar.com</a>
   </p>
   <p class="footer-contact" style="margin-top: 8px; font-size: 12px;">
     Our Bar is a privately held LLC. Contributions are not tax-deductible. All perks are redeemable upon the bar's opening under new operator.
