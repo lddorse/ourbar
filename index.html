@@ -480,6 +480,7 @@
       -webkit-overflow-scrolling: touch;
       gap: 0;
       scrollbar-width: none;
+      position: relative;
     }
     .photo-strip::-webkit-scrollbar { display: none; }
     .photo-strip .photo-cell {
@@ -490,13 +491,9 @@
       aspect-ratio: 4/3;
     }
     .swipe-hint {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      bottom: 40%;
-      left: 50%;
-      transform: translateX(-50%);
+      position: absolute;
+      bottom: 44px;
+      right: 12px;
       background: rgba(11, 8, 5, 0.75);
       color: var(--amber);
       font-family: 'Oswald', sans-serif;
