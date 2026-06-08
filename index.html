@@ -489,9 +489,35 @@
       scroll-snap-align: start;
       aspect-ratio: 4/3;
     }
+    .swipe-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      bottom: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(11, 8, 5, 0.75);
+      color: var(--amber);
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+      z-index: 100;
+      white-space: nowrap;
+    }
+    .swipe-hint.hidden { opacity: 0; }
     .goal-block { padding: 28px 20px; }
     .tiers-grid { grid-template-columns: 1fr; }
     .tiers-grid > a:last-of-type { grid-column: span 1; }
+  }
+
+  @media (min-width: 601px) {
+    .swipe-hint { display: none; }
   }
 </style>
 </head>
@@ -527,6 +553,7 @@
     </svg>
     <p>The Stage</p>
   </div>
+  <div class="swipe-hint" id="swipeHint">Swipe to see more &rarr;</div>
 </div>
 
 <hr class="divider">
@@ -692,6 +719,14 @@
   const raised = 0;
   const goal = 25000;
   setTimeout(() => { progressEl.style.width = Math.min((raised / goal) * 100, 100) + '%'; }, 500);
+
+  const strip = document.querySelector('.photo-strip');
+  const hint = document.getElementById('swipeHint');
+  if (strip && hint) {
+    strip.addEventListener('scroll', () => {
+      hint.classList.add('hidden');
+    }, { once: true });
+  }
 </script>
 
 </body>
