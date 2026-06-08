@@ -527,10 +527,12 @@
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      gap: 3px;
+      gap: 0;
+      width: 100%;
     }
     .photo-strip .photo-cell {
-      flex: 0 0 100vw;
+      flex: 0 0 100%;
+      min-width: 100%;
       scroll-snap-align: center;
       display: flex;
     }
