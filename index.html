@@ -521,8 +521,19 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 600px) {
-    .photo-strip { grid-template-columns: 1fr; }
-    .photo-strip .photo-cell:not(:first-child) { display: none; }
+    .photo-strip {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 3px;
+    }
+    .photo-strip .photo-cell {
+      flex: 0 0 80vw;
+      scroll-snap-align: start;
+      display: flex;
+    }
     .goal-block { padding: 28px 20px; }
   }
 </style>
