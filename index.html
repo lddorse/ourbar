@@ -33,7 +33,6 @@
     font-weight: 300;
     line-height: 1.7;
     font-size: 17px;
-    overflow-x: hidden;
   }
 
   body::before {
@@ -57,6 +56,7 @@
     text-align: center;
     padding: 80px 24px 60px;
     border-bottom: 1px solid var(--border);
+    overflow: hidden;
   }
 
   .hero-eyebrow {
@@ -167,6 +167,7 @@
   }
   .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
 
+  /* ── PHOTO STRIP ── */
   .photo-strip {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -176,25 +177,45 @@
   }
 
   .photo-cell {
+    position: relative;
     aspect-ratio: 4/3;
     background: var(--surface2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    overflow: hidden;
   }
 
-  .photo-cell svg { opacity: 0.25; }
+  .photo-cell img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .photo-cell svg {
+    opacity: 0.25;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+  }
 
   .photo-cell p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     font-family: 'Oswald', sans-serif;
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--text-muted);
+    background: rgba(11, 8, 5, 0.7);
+    padding: 8px 12px;
+    text-align: center;
   }
 
+  /* ── SECTIONS ── */
   section {
     max-width: 900px;
     margin: 0 auto;
@@ -290,6 +311,7 @@
     color: var(--text-muted);
   }
 
+  /* ── TIERS ── */
   .tiers { max-width: 900px; margin: 0 auto; padding: 0 24px 90px; }
 
   .tiers-grid {
@@ -300,14 +322,7 @@
     background: var(--border);
   }
 
-  .tiers-grid > a:last-of-type {
-    grid-column: span 2;
-  }
-
-  @media (max-width: 700px) {
-    .tiers-grid { grid-template-columns: 1fr; }
-    .tiers-grid > a:last-of-type { grid-column: span 1; }
-  }
+  .tiers-grid > a:last-of-type { grid-column: span 2; }
 
   .tier-card {
     background: var(--dark);
@@ -393,26 +408,10 @@
                 linear-gradient(135deg, #7a5c10, #ffd700, #c8960a, #ffe066, #b8860b, #ffd700, #7a5c10) border-box;
   }
 
-  .goat-crown {
-    font-size: 28px;
-    margin-bottom: 10px;
-    display: block;
-    filter: sepia(1) saturate(3) hue-rotate(5deg);
-  }
+  .goat-crown { font-size: 28px; margin-bottom: 10px; display: block; filter: sepia(1) saturate(3) hue-rotate(5deg); }
 
-  .tier-card.goat .tier-amount {
-    font-size: 56px;
-    color: #ffd700;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .tier-card.goat .tier-name {
-    font-size: 16px;
-    letter-spacing: 0.3em;
-    color: #c8960a;
-    margin-bottom: 16px;
-  }
+  .tier-card.goat .tier-amount { font-size: 56px; color: #ffd700; line-height: 1; margin-bottom: 4px; }
+  .tier-card.goat .tier-name { font-size: 16px; letter-spacing: 0.3em; color: #c8960a; margin-bottom: 16px; }
 
   .goat-badge {
     font-family: 'Oswald', sans-serif;
@@ -427,14 +426,7 @@
     font-weight: 700;
   }
 
-  .goat-desc {
-    font-style: italic;
-    font-size: 15px;
-    color: #9a7d4a;
-    margin: 0 0 24px;
-    line-height: 1.5;
-    max-width: 520px;
-  }
+  .goat-desc { font-style: italic; font-size: 15px; color: #9a7d4a; margin: 0 0 24px; line-height: 1.5; max-width: 520px; }
 
   .tier-card.goat .tier-perks {
     display: grid;
@@ -442,22 +434,14 @@
     gap: 0 40px;
   }
 
-  .tier-card.goat .tier-perks li {
-    border-top-color: rgba(255, 215, 0, 0.15);
-    color: #d4b87a;
-  }
-
+  .tier-card.goat .tier-perks li { border-top-color: rgba(255, 215, 0, 0.15); color: #d4b87a; }
   .tier-card.goat .tier-perks li::before { color: #ffd700; }
 
-  .goat-more {
-    margin-top: 20px;
-    font-size: 13px;
-    color: #7a6040;
-    font-style: italic;
-  }
+  .goat-more { margin-top: 20px; font-size: 13px; color: #7a6040; font-style: italic; }
   .goat-more a { color: #c8960a; text-decoration: none; }
   .goat-more a:hover { color: #ffd700; }
 
+  /* ── HOW IT WORKS ── */
   .steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -465,78 +449,49 @@
     margin-top: 48px;
   }
 
-  .step-num {
-    font-family: 'Oswald', sans-serif;
-    font-size: 64px;
-    font-weight: 700;
-    color: var(--surface2);
-    line-height: 1;
-    margin-bottom: 12px;
-  }
-
-  .step-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--cream);
-    margin-bottom: 10px;
-  }
-
+  .step-num { font-family: 'Oswald', sans-serif; font-size: 64px; font-weight: 700; color: var(--surface2); line-height: 1; margin-bottom: 12px; }
+  .step-title { font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cream); margin-bottom: 10px; }
   .step-text { font-size: 15px; color: var(--cream-dim); margin: 0; }
 
-  footer {
-    border-top: 1px solid var(--border);
-    text-align: center;
-    padding: 52px 24px;
-  }
-
-  .footer-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--cream);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
+  /* ── FOOTER ── */
+  footer { border-top: 1px solid var(--border); text-align: center; padding: 52px 24px; }
+  .footer-title { font-family: 'Oswald', sans-serif; font-size: 28px; font-weight: 700; color: var(--cream); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
   .footer-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
-
   .footer-contact { font-size: 14px; color: var(--text-muted); margin-top: 48px; }
   .footer-contact a { color: var(--amber); text-decoration: none; }
   .footer-contact a:hover { color: var(--amber-light); }
 
+  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── MOBILE ── */
   @media (max-width: 600px) {
     .photo-strip {
       display: flex;
       flex-direction: row;
-      overflow-x: auto;
+      overflow-x: scroll;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       gap: 0;
-      width: 100%;
+      scrollbar-width: none;
     }
+    .photo-strip::-webkit-scrollbar { display: none; }
     .photo-strip .photo-cell {
-      flex: 0 0 100%;
-      min-width: 100%;
-      scroll-snap-align: center;
-      display: flex;
+      flex: 0 0 100vw;
+      width: 100vw;
+      min-width: 100vw;
+      scroll-snap-align: start;
+      aspect-ratio: 4/3;
     }
     .goal-block { padding: 28px 20px; }
+    .tiers-grid { grid-template-columns: 1fr; }
+    .tiers-grid > a:last-of-type { grid-column: span 1; }
   }
 </style>
 </head>
@@ -558,12 +513,12 @@
 </header>
 
 <div class="photo-strip">
-<div class="photo-cell">
-    <img src="building.jpg" alt="Our Bar — Penfield, Illinois" style="width:100%; height:100%; object-fit:cover; display:block;">
- <p>The Building</p>
-</div>
   <div class="photo-cell">
- <img src="OurBar-GroupPic.jpg" alt="Group Photo of original Our Bar LLC" style="width:100%; height:100%; object-fit:cover; display:block;">
+    <img src="building.jpg" alt="Our Bar — Penfield, Illinois">
+    <p>The Building</p>
+  </div>
+  <div class="photo-cell">
+    <img src="OurBar-GroupPic.jpg" alt="Group Photo of original Our Bar LLC">
     <p>The Group</p>
   </div>
   <div class="photo-cell">
@@ -666,7 +621,6 @@
       </ul>
     </a>
 
-    <!-- $1000+ GOAT -->
     <div class="tier-card goat reveal">
       <span class="goat-crown">&#9819;</span>
       <div class="goat-badge">The Highest Honor</div>
