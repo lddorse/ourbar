@@ -600,21 +600,21 @@
 
   <div class="goal-block reveal">
     <div class="goal-numbers">
-      <div class="goal-raised">$0</div>
+      <div class="goal-raised" id="goalRaised">$0</div>
       <div class="goal-target">Goal: $25,000</div>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="goal-meta">
       <div class="goal-stat">
-        <div class="goal-stat-num">0</div>
+        <div class="goal-stat-num" id="statBackers">0</div>
         <div class="goal-stat-label">Backers</div>
       </div>
       <div class="goal-stat">
-        <div class="goal-stat-num">$0</div>
+        <div class="goal-stat-num" id="statRaised">$0</div>
         <div class="goal-stat-label">Raised</div>
       </div>
       <div class="goal-stat">
-        <div class="goal-stat-num">$25,000</div>
+        <div class="goal-stat-num" id="statToGo">$25,000</div>
         <div class="goal-stat-label">To Go</div>
       </div>
     </div>
@@ -748,9 +748,22 @@
   reveals.forEach(el => observer.observe(el));
 
   const progressEl = document.getElementById('progressFill');
-  const raised = 0;
   const goal = 25000;
-  setTimeout(() => { progressEl.style.width = Math.min((raised / goal) * 100, 100) + '%'; }, 500);
+  const fmtMoney = (n) => '$' + Math.round(n).toLocaleString('en-US');
+
+  fetch('/api/total')
+    .then((r) => r.json())
+    .then(({ raised = 0, backers = 0 }) => {
+      const toGo = Math.max(goal - raised, 0);
+      document.getElementById('goalRaised').textContent = fmtMoney(raised);
+      document.getElementById('statRaised').textContent = fmtMoney(raised);
+      document.getElementById('statBackers').textContent = backers.toLocaleString('en-US');
+      document.getElementById('statToGo').textContent = fmtMoney(toGo);
+      setTimeout(() => { progressEl.style.width = Math.min((raised / goal) * 100, 100) + '%'; }, 500);
+    })
+    .catch(() => {
+      setTimeout(() => { progressEl.style.width = '0%'; }, 500);
+    });
 
   const strip = document.querySelector('.photo-strip');
   const dots = document.querySelectorAll('.dot');
