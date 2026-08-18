@@ -33,17 +33,37 @@ module.exports = async (req, res) => {
       process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
+    console.error('Webhook signature verification failed:', err.message);
     res.status(400).json({ error: `Webhook signature verification failed: ${err.message}` });
     return;
   }
 
+  console.log('Received Stripe event:', event.type);
+
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const amountTotalCents = typeof session.amount_total === 'number' ? session.amount_total : 0;
+    const amountTotalDollars = amountTotalCents / 100;
 
-    // Stored in cents to keep Redis increments as integers; api/total.js converts back to dollars.
-    await redis.incrby('raised', amountTotalCents);
-    await redis.incr('backers');
+    console.log(
+      'checkout.session.completed - payment_status:',
+      session.payment_status,
+      'amount_total (cents):',
+      session.amount_total,
+      '-> dollars:',
+      amountTotalDollars
+    );
+
+    try {
+      // 'raised' is stored in dollars; incrbyfloat keeps cent-precision amounts intact.
+      const newRaised = await redis.incrbyfloat('raised', amountTotalDollars);
+      const newBackers = await redis.incr('backers');
+      console.log('Updated KV - raised:', newRaised, 'backers:', newBackers);
+    } catch (err) {
+      console.error('Failed to update KV:', err);
+      res.status(500).json({ error: 'Failed to update KV' });
+      return;
+    }
   }
 
   res.status(200).json({ received: true });

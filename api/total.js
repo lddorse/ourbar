@@ -6,13 +6,13 @@ const redis = new Redis({
 });
 
 module.exports = async (req, res) => {
-  const [raisedCents, backers] = await Promise.all([
+  const [raised, backers] = await Promise.all([
     redis.get('raised'),
     redis.get('backers'),
   ]);
 
   res.status(200).json({
-    raised: (raisedCents || 0) / 100,
+    raised: Number(raised) || 0,
     backers: backers || 0,
   });
 };
